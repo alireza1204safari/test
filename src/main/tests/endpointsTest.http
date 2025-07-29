@@ -1,0 +1,57 @@
+### 1. Sign Up a New User
+POST http://localhost:8080/user/signup
+Content-Type: application/json
+
+{
+  "username": "alice3",
+  "password": "alicepass"
+}
+
+### 2. Log In
+POST http://localhost:8080/user/login
+Content-Type: application/json
+
+{
+  "username": "alice",
+  "password": "alicepass"
+}
+
+### 3. Create a Chat
+@AUTH_TOKEN = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZTIiLCJpYXQiOjE3NDY5OTIyNDQsImV4cCI6MTc0NzEwMDI0NH0.VZuyM59Sj2sn8TIgScBZv283IuinKPqRhkr_ewogJc0
+POST http://localhost:8080/chat
+Content-Type: application/json
+Authorization: {{AUTH_TOKEN}}
+
+{
+  "name": "Test Group 5",
+  "type": "group"
+}
+
+### 4. Add Member to Chat
+POST http://localhost:8080/chatmember
+Content-Type: application/json
+Authorization: {{AUTH_TOKEN}}
+
+{
+  "chatId": 3,
+  "username": "alice2",
+  "role": "member"
+}
+
+### 5. Get Own Profile
+GET http://localhost:8080/profile
+Authorization: {{AUTH_TOKEN}}
+
+### 6. Update Own Profile
+PUT http://localhost:8080/profile
+Content-Type: application/json
+Authorization: {{AUTH_TOKEN}}
+
+{
+  "displayName": "Alice",
+  "profilePicture": "https://example.com/alice.jpg"
+}
+
+### 7. Get All Chats
+GET http://localhost:8080/chat
+Authorization: {{AUTH_TOKEN}}
