@@ -9,12 +9,12 @@ import java.util.UUID;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     public Long getId() {
         return id;
     }
-    public String email;
+    private String email;
 
     public String getEmail() {
         return email;
@@ -24,14 +24,25 @@ public class User {
         this.email = email;
     }
 
-    public String username;
-    public String password;
+    private String username;
+
+    private String password;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    public Role role;
-    public String full_name;
-    public String phone;
-    public String address;
+    private Role role;
+    private String full_name;
+    private UserStatus status;
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
+
+    private String phone;
+    private String address;
     private String profileImageBase64;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bank_info_id")

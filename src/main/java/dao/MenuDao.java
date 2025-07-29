@@ -1,4 +1,4 @@
-package repository;
+package dao;
 
 import entity.Menu;
 import org.hibernate.Session;

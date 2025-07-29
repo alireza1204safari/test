@@ -1,4 +1,4 @@
-package repository;
+package dao;
 
 import entity.Token;
 import org.hibernate.Session;

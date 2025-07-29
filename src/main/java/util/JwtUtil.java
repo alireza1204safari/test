@@ -3,7 +3,7 @@ package util;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import repository.TokenDao;
+import dao.TokenDao;
 
 import java.security.Key;
 import java.util.Date;

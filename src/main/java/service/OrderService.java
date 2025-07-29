@@ -9,7 +9,7 @@ import dto.restaurant.ResponseOrder;
 import entity.*;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import repository.*;
+import dao.*;
 import util.HibernateUtil;
 
 import java.io.IOException;
@@ -17,6 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -98,7 +99,7 @@ public class OrderService extends BaseService {
 
             // Validate restaurant
             Restaurant vendor = restaurantDao.getById(vendorId);
-            if (vendor == null || vendor.getStatus() != ResStatus.approved) {
+            if (vendor == null || vendor.getVendor().getStatus() != UserStatus.approved) {
                 sendResponse(exchange, new ErrorDto("Restaurant not found or not approved"), 404);
                 return;
             }
@@ -153,8 +154,8 @@ public class OrderService extends BaseService {
             order.setCourierFee(courierFee);
             order.setPayPrice(payPrice);
             order.setStatus(OrderStatus.submitted);
-            order.setCreatedAt(LocalDateTime.now());
-            order.setUpdatedAt(LocalDateTime.now());
+            order.setCreatedAt(new Date());
+            order.setUpdatedAt(new Date());
             orderItems.forEach(item -> item.setOrder(order));
 
             // Update supply
@@ -282,7 +283,7 @@ public class OrderService extends BaseService {
                 return;
             }
 
-            if (restaurant.getStatus() != ResStatus.approved) {
+            if (restaurant.getVendor().getStatus() != UserStatus.approved) {
                 sendResponse(exchange, new ErrorDto("Restaurant is not approved"), 403);
                 return;
             }
@@ -357,7 +358,7 @@ public class OrderService extends BaseService {
                 return;
             }
 
-            if (order.getVendor().getStatus() != ResStatus.approved) {
+            if (order.getVendor().getVendor().getStatus() != UserStatus.approved) {
                 sendResponse(exchange, new ErrorDto("Restaurant is not approved"), 403);
                 return;
             }
@@ -383,11 +384,10 @@ public class OrderService extends BaseService {
 
             session.beginTransaction();
             switch (newStatus) {
-                case "accepted" -> order.setStatus(OrderStatus.waitingVendor);
+                case "accepted", "served" -> order.setStatus(OrderStatus.findingCourier);
                 case "rejected" -> order.setStatus(OrderStatus.cancelled);
-                case "served" -> order.setStatus(OrderStatus.findingCourier);
             }
-            order.setUpdatedAt(LocalDateTime.now());
+            order.setUpdatedAt(new Date());
             session.update(order);
             session.getTransaction().commit();
 

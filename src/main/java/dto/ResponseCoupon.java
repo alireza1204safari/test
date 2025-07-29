@@ -6,13 +6,13 @@ public class ResponseCoupon {
     private Long id;
     private String couponCode;
     private String type;
-    private Double value;
+    private Integer value;
     private Integer minPrice;
     private Integer userCount;
     private String startDate;
     private String endDate;
 
-    public ResponseCoupon(Long id, String couponCode, String type, Double value, Integer minPrice, Integer userCount, LocalDate startDate, LocalDate endDate) {
+    public ResponseCoupon(Long id, String couponCode, String type, Integer value, Integer minPrice, Integer userCount, LocalDate startDate, LocalDate endDate) {
         this.id = id;
         this.couponCode = couponCode;
         this.type = type;
@@ -30,8 +30,8 @@ public class ResponseCoupon {
     public void setCouponCode(String couponCode) { this.couponCode = couponCode; }
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
-    public Double getValue() { return value; }
-    public void setValue(Double value) { this.value = value; }
+    public Integer getValue() { return value; }
+    public void setValue(Integer value) { this.value = value; }
     public Integer getMinPrice() { return minPrice; }
     public void setMinPrice(Integer minPrice) { this.minPrice = minPrice; }
     public Integer getUserCount() { return userCount; }

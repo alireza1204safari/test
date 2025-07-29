@@ -3,6 +3,7 @@ package dto.restaurant;
 import entity.OrderItem;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ public class ResponseOrder {
     public ResponseOrder(Long id, String deliveryAddress, Long customerId, Long vendorId, Long couponId,
                          List<OrderItem> items, Integer rawPrice, Integer taxFee, Integer additionalFee,
                          Integer courierFee, Integer payPrice, Long courierId, String status,
-                         LocalDateTime createdAt, LocalDateTime updatedAt) {
+                         Date createdAt, Date updatedAt) {
         this.id = id;
         this.deliveryAddress = deliveryAddress;
         this.customerId = customerId;

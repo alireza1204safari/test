@@ -5,7 +5,7 @@ import dto.ErrorDto;
 import dto.ResponseCoupon;
 import entity.Coupon;
 import org.hibernate.Session;
-import repository.CouponDao;
+import dao.CouponDao;
 import util.HibernateUtil;
 
 import java.io.IOException;

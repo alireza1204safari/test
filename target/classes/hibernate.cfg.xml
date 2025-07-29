@@ -1,35 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <!-- Database connection settings -->
-        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/snappfood</property>
-        <property name="hibernate.connection.username">postgres</property>
-        <property name="hibernate.connection.password">alireza12</property>
-
-        <!-- JDBC connection pool settings -->
-        <property name="hibernate.connection.pool_size">5</property>
-
-        <!-- SQL dialect -->
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-
-        <!-- Enable Hibernate's automatic session context management -->
-        <property name="hibernate.current_session_context_class">thread</property>
-
-        <!-- Echo all executed SQL to stdout -->
-        <property name="hibernate.show_sql">true</property>
-
-        <!-- Update the database schema on startup -->
-        <property name="hibernate.hbm2ddl.auto">update</property>
-
-        <!-- Entity mappings -->
-        <mapping class="entity.User"/>
-        <mapping class="entity.Token"/>
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/snappfood</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">alireza12</property>
+        <property name="connection.pool_size">5</property>
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="current_session_context_class">thread</property>
+        <property name="show_sql">true</property>
+        <property name="hbm2ddl.auto">update</property>
         <mapping class="entity.BankInfo"/>
-        <mapping class="entity.Restaurant"/>
+        <mapping class="entity.Token"/>
+        <mapping class="entity.Coupon"/>
         <mapping class="entity.FoodItem"/>
         <mapping class="entity.Menu"/>
         <mapping class="entity.Order"/>
-        <mapping class="entity.Coupon"/>
         <mapping class="entity.OrderItem"/>
+        <mapping class="entity.Restaurant"/>
+        <mapping class="entity.User"/>
+        <mapping class="entity.Rating"/>
+        <mapping class="entity.Transaction"/>
+        <mapping class="entity.Favorite"/>
     </session-factory>
 </hibernate-configuration>

@@ -14,7 +14,7 @@ import entity.Role;
 import entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import repository.UserDao;
+import dao.UserDao;
 import util.HibernateUtil;
 import util.JwtUtil;
 

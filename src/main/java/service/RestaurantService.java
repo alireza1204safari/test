@@ -11,10 +11,11 @@ import dto.restaurant.ResponseRestaurant;
 import entity.ResStatus;
 import entity.Restaurant;
 import entity.User;
+import entity.UserStatus;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import repository.RestaurantDao;
-import repository.UserDao;
+import dao.RestaurantDao;
+import dao.UserDao;
 import util.HibernateUtil;
 
 import java.io.IOException;
@@ -58,7 +59,6 @@ public class RestaurantService extends BaseService {
             restaurant.setTaxFee(request.getTaxFee());
             restaurant.setAdditionalFee(request.getAdditional_fee());
             restaurant.setVendor(vendor);
-            restaurant.setStatus(ResStatus.pending);
 
             restaurantDao.save(restaurant);
             transaction.commit();
@@ -70,8 +70,7 @@ public class RestaurantService extends BaseService {
                     restaurant.getPhone(),
                     restaurant.getLogoBase64(),
                     restaurant.getTaxFee(),
-                    restaurant.getAdditionalFee(),
-                    restaurant.getStatus().name()
+                    restaurant.getAdditionalFee()
             );
             sendResponse(exchange, response, 201);
         } catch (IllegalArgumentException e) {
@@ -96,8 +95,7 @@ public class RestaurantService extends BaseService {
                     r.getPhone(),
                     r.getLogoBase64(),
                     r.getTaxFee(),
-                    r.getAdditionalFee(),
-                    r.getStatus().name()
+                    r.getAdditionalFee()
             )).collect(Collectors.toList());
             sendResponse(exchange, response, 200);
         } catch (Exception e) {
@@ -116,8 +114,7 @@ public class RestaurantService extends BaseService {
                     r.getPhone(),
                     r.getLogoBase64(),
                     r.getTaxFee(),
-                    r.getAdditionalFee(),
-                    r.getStatus().name()
+                    r.getAdditionalFee()
             )).collect(Collectors.toList());
             sendResponse(exchange, response, 200);
         } catch (Exception e) {
@@ -156,7 +153,6 @@ public class RestaurantService extends BaseService {
             }
 
             Transaction transaction = session.beginTransaction();
-            restaurant.setStatus(status);
             restaurantDao.save(restaurant);
             transaction.commit();
 
@@ -183,8 +179,7 @@ public class RestaurantService extends BaseService {
                     r.getPhone(),
                     r.getLogoBase64(),
                     r.getTaxFee(),
-                    r.getAdditionalFee(),
-                    r.getStatus().name()
+                    r.getAdditionalFee()
             )).collect(Collectors.toList());
             sendResponse(exchange, response, 200);
         } catch (Exception e) {
@@ -207,7 +202,7 @@ public class RestaurantService extends BaseService {
                 sendResponse(exchange, new ErrorDto("Forbidden: Not your restaurant"), 403);
                 return;
             }
-            if (restaurant.getStatus() != ResStatus.pending) {
+            if (restaurant.getVendor().getStatus() != UserStatus.approved) {
                 sendResponse(exchange, new ErrorDto("Cannot update restaurant: Already approved or rejected"), 409);
                 return;
             }
@@ -236,8 +231,7 @@ public class RestaurantService extends BaseService {
                     restaurant.getPhone(),
                     restaurant.getLogoBase64(),
                     restaurant.getTaxFee(),
-                    restaurant.getAdditionalFee(),
-                    restaurant.getStatus().name()
+                    restaurant.getAdditionalFee()
             );
             sendResponse(exchange, response, 200);
         } catch (IllegalArgumentException e) {

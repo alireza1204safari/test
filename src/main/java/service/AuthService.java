@@ -14,8 +14,8 @@ import entity.Token;
 import entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import repository.TokenDao;
-import repository.UserDao;
+import dao.TokenDao;
+import dao.UserDao;
 import util.HibernateUtil;
 import util.JwtUtil;
 
@@ -73,8 +73,8 @@ public class AuthService {
         Gson gson = new Gson();
         User user = gson.fromJson(body, User.class);
         JsonObject json = JsonParser.parseString(body).getAsJsonObject();
-        String[] requiredFields = {"full_name", "phone", "password", "role", "address"};
-        if (!isValidEmail(user.getEmail())){
+        String[] requiredFields = {"full_name", "phone", "password", "role"};
+        if (user.getEmail() != null && !isValidEmail(user.getEmail())){
             sendResponse(exchange, "Invalid email", 400);
             throw new IllegalArgumentException("Invalid email");
         }

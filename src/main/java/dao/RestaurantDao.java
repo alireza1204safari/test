@@ -1,4 +1,4 @@
-package repository;
+package dao;
 
 import entity.ResStatus;
 import entity.Restaurant;
@@ -38,7 +38,7 @@ public class RestaurantDao {
     public List<Restaurant> getByVendorPhone(String phone) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Restaurant> query = session.createQuery(
-                    "FROM Restaurant r WHERE r..phone = :phone",
+                    "FROM Restaurant r WHERE r.phone = :phone",
                     Restaurant.class
             );
             query.setParameter("phone", phone);
@@ -49,7 +49,7 @@ public class RestaurantDao {
     public List<Restaurant> getApprovedRestaurants() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Restaurant> query = session.createQuery(
-                    "FROM Restaurant r WHERE r.status = :status",
+                    "FROM Restaurant r WHERE r.vendor.status = :status",
                     Restaurant.class
             );
             query.setParameter("status", ResStatus.approved);
@@ -60,7 +60,7 @@ public class RestaurantDao {
     public List<Restaurant> getPendingRestaurants() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Restaurant> query = session.createQuery(
-                    "FROM Restaurant r WHERE r.status = :status",
+                    "FROM Restaurant r WHERE r.vendor.status = :status",
                     Restaurant.class
             );
             query.setParameter("status", ResStatus.pending);

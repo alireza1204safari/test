@@ -8,16 +8,13 @@ import dto.ErrorDto;
 import dto.ResponseMessage;
 import dto.restaurant.RequestAddMenuItem;
 import dto.restaurant.ResponseMenu;
-import entity.FoodItem;
-import entity.Menu;
-import entity.ResStatus;
-import entity.Restaurant;
+import entity.*;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import repository.FoodItemDao;
-import repository.MenuDao;
-import repository.RestaurantDao;
+import dao.FoodItemDao;
+import dao.MenuDao;
+import dao.RestaurantDao;
 import util.HibernateUtil;
 
 import java.io.IOException;
@@ -49,7 +46,7 @@ public class MenuService extends BaseService {
                 sendResponse(exchange, new ErrorDto("Forbidden: Not your restaurant"), 403);
                 return;
             }
-            if (restaurant.getStatus() != ResStatus.approved) {
+            if (restaurant.getVendor().getStatus() != UserStatus.approved) {
                 sendResponse(exchange, new ErrorDto("Cannot add menu: Restaurant not approved"), 409);
                 return;
             }
@@ -96,7 +93,7 @@ public class MenuService extends BaseService {
                 sendResponse(exchange, new ErrorDto("Forbidden: Not your restaurant"), 403);
                 return;
             }
-            if (restaurant.getStatus() != ResStatus.approved) {
+            if (restaurant.getVendor().getStatus() != UserStatus.approved) {
                 sendResponse(exchange, new ErrorDto("Cannot delete menu: Restaurant not approved"), 409);
                 return;
             }
@@ -132,7 +129,7 @@ public class MenuService extends BaseService {
                 sendResponse(exchange, new ErrorDto("Forbidden: Not your restaurant"), 403);
                 return;
             }
-            if (restaurant.getStatus() != ResStatus.approved) {
+            if (restaurant.getVendor().getStatus() != UserStatus.approved) {
                 sendResponse(exchange, new ErrorDto("Cannot add item to menu: Restaurant not approved"), 409);
                 return;
             }
@@ -180,7 +177,7 @@ public class MenuService extends BaseService {
                 sendResponse(exchange, new ErrorDto("Forbidden: Not your restaurant"), 403);
                 return;
             }
-            if (restaurant.getStatus() != ResStatus.approved) {
+            if (restaurant.getVendor().getStatus() != UserStatus.approved) {
                 sendResponse(exchange, new ErrorDto("Cannot delete item from menu: Restaurant not approved"), 409);
                 return;
             }

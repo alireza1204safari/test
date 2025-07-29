@@ -1,4 +1,4 @@
-package repository;
+package dao;
 
 import entity.Coupon;
 import org.hibernate.Session;

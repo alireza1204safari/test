@@ -12,10 +12,11 @@ import dto.restaurant.RequestUpdateFoodItem;
 import entity.FoodItem;
 import entity.ResStatus;
 import entity.Restaurant;
+import entity.UserStatus;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import repository.FoodItemDao;
-import repository.RestaurantDao;
+import dao.FoodItemDao;
+import dao.RestaurantDao;
 import util.HibernateUtil;
 
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class FoodItemService extends BaseService {
                 sendResponse(exchange, new ErrorDto("Forbidden: Not your restaurant"), 403);
                 return;
             }
-            if (restaurant.getStatus() != ResStatus.approved) {
+            if (restaurant.getVendor().getStatus() != UserStatus.approved) {
                 sendResponse(exchange, new ErrorDto("Cannot add food item: Restaurant not approved"), 409);
                 return;
             }
@@ -106,7 +107,7 @@ public class FoodItemService extends BaseService {
                 sendResponse(exchange, new ErrorDto("Forbidden: Not your restaurant"), 403);
                 return;
             }
-            if (restaurant.getStatus() != ResStatus.approved) {
+            if (restaurant.getVendor().getStatus() != UserStatus.approved) {
                 sendResponse(exchange, new ErrorDto("Cannot update food item: Restaurant not approved"), 409);
                 return;
             }
@@ -161,7 +162,7 @@ public class FoodItemService extends BaseService {
                 sendResponse(exchange, new ErrorDto("Forbidden: Not your restaurant"), 403);
                 return;
             }
-            if (restaurant.getStatus() != ResStatus.approved) {
+            if (restaurant.getVendor().getStatus() != UserStatus.approved) {
                 sendResponse(exchange, new ErrorDto("Cannot delete food item: Restaurant not approved"), 409);
                 return;
             }

@@ -1,6 +1,9 @@
 package entity;
 
 import jakarta.persistence.*;
+
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -52,10 +55,10 @@ public class Order {
     private OrderStatus status;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+    private Date updatedAt;
 
     // Getters and setters
     public Long getId() { return id; }
@@ -84,8 +87,8 @@ public class Order {
     public void setCourierId(Long courierId) { this.courierId = courierId; }
     public OrderStatus getStatus() { return status; }
     public void setStatus(OrderStatus status) { this.status = status; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public Date getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+    public Date getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(Date updatedAt) { this.updatedAt = updatedAt; }
 }

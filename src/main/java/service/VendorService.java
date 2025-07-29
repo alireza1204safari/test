@@ -10,10 +10,11 @@ import dto.restaurant.ResponseRestaurant;
 import entity.Menu;
 import entity.ResStatus;
 import entity.Restaurant;
+import entity.UserStatus;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import repository.MenuDao;
-import repository.RestaurantDao;
+import dao.MenuDao;
+import dao.RestaurantDao;
 import util.HibernateUtil;
 
 import java.io.IOException;
@@ -52,7 +53,7 @@ public class VendorService extends BaseService {
                 }
             }
 
-            StringBuilder hql = new StringBuilder("FROM Restaurant r WHERE r.status = :status");
+            StringBuilder hql = new StringBuilder("FROM Restaurant r WHERE r.vendor.status = :status");
             boolean tmp = false;
             if (search != null && !search.isBlank()) {
                 hql.append(" AND r.name LIKE :search");
@@ -64,7 +65,7 @@ public class VendorService extends BaseService {
 
 
             Query<Restaurant> query = session.createQuery(hql.toString(), Restaurant.class);
-            query.setParameter("status", ResStatus.approved);
+            query.setParameter("status", UserStatus.approved);
             if (search != null && !search.isBlank()) {
                 query.setParameter("search", "%" + search + "%");
             }
@@ -80,8 +81,7 @@ public class VendorService extends BaseService {
                     r.getPhone(),
                     r.getLogoBase64(),
                     r.getTaxFee(),
-                    r.getAdditionalFee(),
-                    r.getStatus().name()
+                    r.getAdditionalFee()
             )).collect(Collectors.toList());
 
             sendResponse(exchange, response, 200);
@@ -99,7 +99,7 @@ public class VendorService extends BaseService {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Restaurant restaurant = restaurantDao.getById(vendorId);
-            if (restaurant == null || restaurant.getStatus() != ResStatus.approved) {
+            if (restaurant == null || restaurant.getVendor().getStatus() != UserStatus.approved) {
                 sendResponse(exchange, new ErrorDto("Vendor not found or not approved"), 404);
                 return;
             }
@@ -113,8 +113,7 @@ public class VendorService extends BaseService {
                     restaurant.getPhone(),
                     restaurant.getLogoBase64(),
                     restaurant.getTaxFee(),
-                    restaurant.getAdditionalFee(),
-                    restaurant.getStatus().name()
+                    restaurant.getAdditionalFee()
             );
             response.put("vendor", vendorResponse);
 

@@ -8,9 +8,10 @@ import dto.ErrorDto;
 import dto.restaurant.ResponseFoodItem;
 import entity.FoodItem;
 import entity.ResStatus;
+import entity.UserStatus;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import repository.FoodItemDao;
+import dao.FoodItemDao;
 import util.HibernateUtil;
 
 import java.io.IOException;
@@ -113,7 +114,7 @@ public class ItemService extends BaseService {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             FoodItem foodItem = foodItemDao.getById(itemId);
-            if (foodItem == null || foodItem.getRestaurant().getStatus() != ResStatus.approved) {
+            if (foodItem == null || foodItem.getRestaurant().getVendor().getStatus() != UserStatus.approved) {
                 sendResponse(exchange, new ErrorDto("Item not found or not from an approved restaurant"), 404);
                 return;
             }

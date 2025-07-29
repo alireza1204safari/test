@@ -31,9 +31,6 @@ public class Restaurant {
     @JoinColumn(name = "user_id", nullable = false)
     private User vendor; // کاربر با نقش seller
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private ResStatus status;
 
     // Getters and setters
     public Long getId() { return id; }
@@ -52,6 +49,4 @@ public class Restaurant {
     public void setAdditionalFee(Integer additionalFee) { this.additionalFee = additionalFee; }
     public User getVendor() { return vendor; }
     public void setVendor(User vendor) { this.vendor = vendor; }
-    public ResStatus getStatus() { return status; }
-    public void setStatus(ResStatus status) { this.status = status; }
 }

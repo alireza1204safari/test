@@ -18,7 +18,7 @@ public class Coupon {
     private String type; // fixed or percent
 
     @Column(nullable = false)
-    private Double value;
+    private Integer value;
 
     @Column(name = "min_price", nullable = false)
     private Integer minPrice;
@@ -39,8 +39,8 @@ public class Coupon {
     public void setCouponCode(String couponCode) { this.couponCode = couponCode; }
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
-    public Double getValue() { return value; }
-    public void setValue(Double value) { this.value = value; }
+    public Integer getValue() { return value; }
+    public void setValue(Integer value) { this.value = value; }
     public Integer getMinPrice() { return minPrice; }
     public void setMinPrice(Integer minPrice) { this.minPrice = minPrice; }
     public Integer getUserCount() { return userCount; }
